@@ -3,6 +3,8 @@ module Quad_Decode (
     input reset,
     input read,
     output unsigned [31:0] readdata,
+    input write,
+    input unsigned [31:0] writedata,
     input A,
     input B,
     input I
@@ -11,9 +13,17 @@ module Quad_Decode (
   parameter CLOCK_FREQ_HZ = 50_000_000;
 
   wire direction;
-  integer pos;
+  integer pos, offset;
+  reg dir;
 
-  assign readdata = pos;
+  always @ ( posedge clk ) begin
+    if(write)begin
+      offset <= pos;
+      dir <= writedata[0];
+    end
+  end
+
+  assign readdata = dir?(pos-offset):(offset-pos);
 
   quadrature_decoder #(0) quad_counter(
      .clk(clk),
