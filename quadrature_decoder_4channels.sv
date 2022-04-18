@@ -41,19 +41,44 @@ module Quadrature_Decoder_4Channels (
 		for(i=0;i<4;i=i+1)begin
 			channel_prev[i] <= channel[i];
 		end
-		if(channel[0] && falling_edge[1])begin
-				pos <= pos+1;
-		end
-		if(!channel[1] && falling_edge[0])begin
-				pos <= pos+1;
-		end
-		if(!channel[0] && rising_edge[1])begin
-				pos <= pos+1;
-		end
-		if(channel[1] && rising_edge[0])begin
-				pos <= pos+1;
-		end
+//		if(channel[0] && falling_edge[1])begin
+//				pos <= pos+1;
+//		end
+//		if(!channel[1] && falling_edge[0])begin
+//				pos <= pos+1;
+//		end
+//		if(!channel[0] && rising_edge[1])begin
+//				pos <= pos+1;
+//		end
+//		if(channel[1] && rising_edge[0])begin
+//				pos <= pos+1;
+//		end
+//		
+//		if(channel[1] && falling_edge[0])begin
+//				pos <= pos-1;
+//		end
+//		if(!channel[0] && falling_edge[1])begin
+//				pos <= pos-1;
+//		end
+//		if(!channel[1] && rising_edge[0])begin
+//				pos <= pos-1;
+//		end
+//		if(channel[0] && rising_edge[1])begin
+//				pos <= pos-1;
+//		end
 		
+		if(rising_edge[0])begin
+			pos <= pos+(channel[1]?1:-1);
+		end
+		if(rising_edge[1])begin
+			pos <= pos+(channel[0]?-1:1);
+		end
+		if(falling_edge[0])begin
+			pos <= pos+(channel[1]?-1:1);
+		end
+		if(falling_edge[1])begin
+			pos <= pos+(channel[0]?1:-1);
+		end
 	end
 
 
