@@ -72,6 +72,19 @@ module Quadrature_Decoder_4Channels (
 		if(falling_edge[1])begin
 			pos <= pos+(channel_debounced[0]?1:-1);
 		end
+		
+		if(rising_edge[2])begin
+			pos <= pos+(channel_debounced[3]?1:-1);
+		end
+		if(rising_edge[3])begin
+			pos <= pos+(channel_debounced[2]?-1:1);
+		end
+		if(falling_edge[2])begin
+			pos <= pos+(channel_debounced[3]?-1:1);
+		end
+		if(falling_edge[3])begin
+			pos <= pos+(channel_debounced[2]?1:-1);
+		end
 	end
 
 
